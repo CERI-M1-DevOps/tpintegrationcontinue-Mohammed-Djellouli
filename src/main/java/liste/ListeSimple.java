@@ -4,14 +4,35 @@ public class ListeSimple {
     private long size;
     Noeud tete;
 
+    /**
+     * Retourne le nombre d'éléments actuellement présents dans la liste.
+     *
+     * @return la taille de la liste (nombre de nœuds), toujours ≥ 0
+     */
     public long getSize() {
         return size;
     }
 
+
+    /**
+     * Ajoute un nouvel élément en tête de liste.
+     * Incrémente la taille de la liste.
+     *
+     * @param element valeur entière à insérer comme nouvel élément (nouvelle tête)
+     */
     public void ajout(int element) {
         tete = new Noeud(element, tete);
         size++;
     }
+
+    /**
+     * Remplace la première occurrence trouvée de {@code element} par {@code nouvelleValeur}.
+     * Si l'élément n'est pas présent, la liste reste inchangée.
+     *
+     * @param element        valeur recherchée (première occurrence ciblée)
+     * @param nouvelleValeur valeur de remplacement appliquée à cette occurrence
+     * @return rien (effet de bord : modification éventuelle d'un nœud de la liste)
+     */
 
     public void modifiePremier(Object element, Object nouvelleValeur) {
         Noeud courant = tete;
