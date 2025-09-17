@@ -1,0 +1,36 @@
+name: Generate & Publish Javadoc
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    if: ${{ github.event.pull_request.merged == true }}   # run only if merged
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout merge commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          fetch-depth: 0
+
+      - name: Set up JDK 21 (Corretto)
+        uses: actions/setup-java@v4
+        with:
+          distribution: corretto
+          java-version: '21'
+
+      - name: Build Javadoc
+        run: mvn -B -DskipTests javadoc:javadoc
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site/apidocs
+          force_orphan: true
