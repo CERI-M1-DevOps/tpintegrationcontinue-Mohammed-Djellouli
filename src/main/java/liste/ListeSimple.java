@@ -35,7 +35,6 @@ public class ListeSimple {
      *
      * @param element        valeur recherchée (première occurrence ciblée)
      * @param nouvelleValeur valeur de remplacement appliquée à cette occurrence
-     * @return rien (effet de bord : modification éventuelle d'un nœud de la liste)
      */
     public void modifiePremier(Object element, Object nouvelleValeur) {
         Noeud courant = tete;
