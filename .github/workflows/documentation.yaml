@@ -28,9 +28,5 @@ jobs:
       - name: Build Javadoc
         run: mvn -B -DskipTests javadoc:javadoc
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./moduleListeSimple/target/site/apidocs
-          force_orphan: true
+      - name: List generated files
+        run: ls -R ./moduleListeSimple/target/site/apidocs || ls -R ./target/site/apidocs
