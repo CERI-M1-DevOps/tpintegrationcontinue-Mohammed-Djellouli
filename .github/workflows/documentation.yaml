@@ -28,5 +28,24 @@ jobs:
       - name: Build Javadoc
         run: mvn -B -DskipTests javadoc:javadoc
 
-      - name: List generated files
-        run: ls -R ./moduleListeSimple/target/site/apidocs || ls -R ./target/site/apidocs
+      # Locate the apidocs directory (works for single or multi-module builds)
+      - name: Locate apidocs
+        id: locate_apidocs
+        shell: bash
+        run: |
+          set -e
+          APIDOCS_DIR=$(find . -type d -name apidocs -print -quit)
+          if [ -z "$APIDOCS_DIR" ]; then
+            echo "No 'apidocs' directory found after javadoc build." >&2
+            exit 1
+          fi
+          echo "Found apidocs at: $APIDOCS_DIR"
+          echo "apidocs_dir=$APIDOCS_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy to GitHub Pages (branch mode)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ steps.locate_apidocs.outputs.apidocs_dir }}
+          # Keep this true for the very first publish; you can remove it afterwards
+          force_orphan: true
