@@ -47,5 +47,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ steps.locate_apidocs.outputs.apidocs_dir }}
-          # Keep this true for the very first publish; you can remove it afterwards
           force_orphan: true
