@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   docs:
-    if: ${{ github.event.pull_request.merged == true }}   # run only if merged
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout merge commit
@@ -32,5 +32,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/site/apidocs
+          publish_dir: ./moduleListeSimple/target/site/apidocs
           force_orphan: true
